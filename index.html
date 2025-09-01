@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>রাঙামাটি রাইফেলস সরকারি প্রাথমিক বিদ্যালয়</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', 'Nikosh', 'SolaimanLipi', sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+  min-height: 100vh;
+  padding: 20px;
+  color: #2c3e50;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 25px;
+  padding: 20px;
+  background: linear-gradient(135deg, #1a237e, #283593);
+  color: white;
+  border-radius: 15px;
+  position: relative;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.datetime {
+  font-size: 1.2rem;
+  font-weight: bold;
+  background: rgba(255,255,255,0.2);
+  display: inline-block;
+  padding: 8px 15px;
+  border-radius: 10px;
+}
+
+.user-controls {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.user-type-btn {
+  background: rgba(255,255,255,0.2);
+  color: white;
+  border: 1px solid white;
+  padding: 5px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.user-type-btn.active {
+  background: white;
+  color: #1a237e;
+}
+
+.notice-board {
+  background: linear-gradient(90deg, #ff9800, #ff5722);
+  color: white;
+  padding: 15px;
+  margin: 20px auto;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  max-width: 1200px;
+}
+
+.notice-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.notice-text {
+  display: inline-block;
+  white-space: nowrap;
+  animation: scrollText 25s linear infinite;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 5px;
+}
+
+@keyframes scrollText {
+  from { transform: translateX(100%); }
+  to { transform: translateX(-100%); }
+}
+
+.add-notice-btn {
+  background: white;
+  color: #ff5722;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.dashboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.card {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  padding: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-top: 5px solid #2196f3;
+  cursor: pointer;
+  position: relative;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+
+.card-title {
+  font-size: 1.4rem;
+  color: #1a237e;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #e3f2fd;
+  text-align: center;
+}
+
+.edit-icon {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: #2196f3;
+  color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.card:hover .edit-icon {
+  opacity: 1;
+}
+
+.card-content {
+  min-height: 150px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  padding: 10px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.class-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #e3f2fd;
+}
+
+.class-item:hover {
+  background: #bbdefb;
+}
+
+.student-count {
+  background: #2196f3;
+  color: white;
+  padding: 3px 8px;
+  border-radius: 15px;
+  font-size: 0.8rem;
+}
+
+.result-item, .holiday-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  margin-bottom: 8px;
+  border-radius: 8px;
+  background: #f5f5f5;
+}
+
+.holiday-item {
+  background: #fff3e0;
+  border-left: 4px solid #ff9800;
+}
+
+.teacher-table, .student-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+.teacher-table th, .teacher-table td, .student-table th, .student-table td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+.teacher-table th, .student-table th {
+  background: #e3f2fd;
+  color: #000;
+}
+
+.student-table th {
+  background: #2196f3;
+  color: white;
+}
+
+.attendance-present {
+  color: #4caf50;
+  font-weight: bold;
+}
+
+.attendance-absent {
+  color: #f44336;
+  font-weight: bold;
+}
+
+.complaint-form input, .complaint-form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.complaint-form textarea {
+  height: 100px;
+  resize: vertical;
+}
+
+.btn {
+  background: #2196f3;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s;
+  margin-top: 10px;
+}
+
+.btn:hover {
+  background: #1976d2;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  width: 90%;
+  max-width: 800px;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.close {
+  float: right;
+  font-size: 28px;
+  cursor: pointer;
+  color: #f44336;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.form-group input, .form-group textarea, .form-group select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.add-item-form {
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid #eee;
+}
+
+@media (max-width: 768px) {
+  .dashboard {
+    grid-template-columns: 1fr;
+  }
+  
+  .header h1 {
+    font-size: 1.8rem;
+  }
+  
+  .notice-text {
+    font-size: 16px;
+  }
+  
+  .user-controls {
+    position: static;
+    justify-content: center;
+    margin-top: 15px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+<h1>রাঙামাটি রাইফেলস সরকারি প্রাথমিক বিদ্যালয়</h1>
+<div class="datetime" id="datetime"></div>
+<div class="user-controls">
+<button class="user-type-btn active" id="studentView">শিক্ষার্থী</button>
+<button class="user-type-btn" id="teacherView">শিক্ষক</button>
+</div>
+</div>
+
+<div class="notice-board">
+<div class="notice-header">
+<h3>নোটিশ বোর্ড</h3>
+<button class="add-notice-btn" id="addNoticeBtn">+ নোটিশ যোগ করুন</button>
+</div>
+<div class="notice-text" id="noticeScrollText"></div>
+</div>
+
+<div class="dashboard">
+<!-- ৮টি কার্ড -->
+<div class="card" onclick="openClassMenu()">
+<div class="edit-icon" onclick="event.stopPropagation(); editCard('ক্লাস')">✎</div>
+<h2 class="card-title">ক্লাস</h2>
+<div class="card-content">শিশু থেকে ৮ম শ্রেণি নির্বাচন করুন</div>
+</div>
+
+<div class="card" onclick="openSyllabus()">
+<div class="edit-icon" onclick="event.stopPropagation(); editCard('পরীক্ষার সিলেবাস')">✎</div>
+<h2 class="card-title">পরীক্ষার সিলেবাস</h2>
+<div class="card-content">আগামী পরীক্ষার বিষয় ও তারিখ দেখুন</div>
+</div>
+
+<div class="card" onclick="openResults()">
+<div class="edit-icon" onclick="event.stopPropagation(); editCard('ফলাফল')">✎</div>
+<h2 class="card-title">শেষ পরীক্ষার ফলাফল</h2>
+<div class="card-content">শিশু থেকে ৮ম পর্যন্ত ফলাফল দেখুন</div>
+</div>
+
+<div class="card" onclick="openScoutProgram()">
+<div class="edit-icon" onclick="event.stopPropagation(); editCard('স্কাউট প্রোগ্রাম')">✎</div>
+<h2 class="card-title">কাব স্কাউট প্রোগ্রাম</h2>
+<div class="card-content">স্কাউট প্রোগ্রামসমূহ দেখুন</div>
+</div>
+
+<div class="card" onclick="openHolidays()">
+<div class="edit-icon" onclick="event.stopPropagation(); editCard('স্কুল বন্ধের তারিখ')">✎</div>
+<h2 class="card-title">স্কুল বন্ধের তারিখ</h2>
+<div class="card-content">ছুটির তারিখ দেখুন</div>
+</div>
+
+<div class="card" onclick="openSchoolProgram()">
+<div class="edit-icon" onclick="event.stopPropagation(); editCard('বিদ্যালয় প্রোগ্রাম')">✎</div>
+<h2 class="card-title">বিদ্যালয় প্রোগ্রাম</h2>
+<div class="card-content">বিদ্যালয়ের সকল প্রোগ্রাম দেখুন</div>
+</div>
+
+<div class="card" onclick="openTeachers()">
+<div class="edit-icon" onclick="event.stopPropagation(); editCard('শিক্ষকের নম্বর')">✎</div>
+<h2 class="card-title">শিক্ষকের নম্বর</h2>
+<div class="card-content">শিক্ষকের নাম ও নম্বর দেখুন</div>
+</div>
+
+<div class="card" onclick="openComplaint()">
+<div class="edit-icon" onclick="event.stopPropagation(); editCard('অভিযোগ')">✎</div>
+<h2 class="card-title">অভিযোগ প্রদান</h2>
+<div class="card-content">নতুন অভিযোগ জমা দিন</div>
+</div>
+</div>
+
+<!-- মডাল -->
+<div class="modal" id="modal">
+<div class="modal-content">
+<span class="close" onclick="closeModal()">&times;</span>
+<h2 id="modalTitle"></h2>
+<div id="modalBody"></div>
+</div>
+</div>
+
+<!-- নোটিশ মোডাল -->
+<div class="modal" id="noticeModal">
+<div class="modal-content">
+<span class="close" onclick="closeNoticeModal()">&times;</span>
+<h2>নতুন নোটিশ যোগ করুন</h2>
+<div class="form-group">
+  <input type="text" id="newNotice" placeholder="নতুন নোটিশ লিখুন">
+</div>
+<button class="btn" onclick="addNewNotice()">নোটিশ যোগ করুন</button>
+</div>
+</div>
+
+<!-- এডিট মোডাল -->
+<div class="modal" id="editModal">
+<div class="modal-content">
+<span class="close" onclick="closeEditModal()">&times;</span>
+<h2 id="editModalTitle"></h2>
+<div id="editModalBody"></div>
+</div>
+</div>
+
+<script>
+// ডেটা স্টোরেজ
+let isTeacherView = false;
+let notices = ["📢 সকল শিক্ষার্থীর ইউনিফর্ম পরতে হবে", "📝 বার্ষিক ক্রীড়া প্রতিযোগিতা", "📚 পরীক্ষার সময়সূচী প্রকাশিত হয়েছে", "🎉 বিজয় দিবস উদযাপন ১৬ই ডিসেম্বর"];
+let classes = ['শিশু', '১ম', '২য়', '৩য়', '৪র্থ', '৫ম', '৬ষ্ঠ', '৭ম', '৮ম'];
+let syllabus = [
+  { subject: 'বাংলা', date: '১ সেপ্টেম্বর' },
+  { subject: 'গণিত', date: '২ সেপ্টেম্বর' },
+  { subject: 'ইংরেজি', date: '৩ সেপ্টেম্বর' }
+];
+let scoutPrograms = [
+  'স্কাউট ট্রেইনিং - ৫ সেপ্টেম্বর',
+  'ক্যাম্প - ১০ সেপ্টেম্বর'
+];
+let holidays = [
+  'ঈদ - ২০ সেপ্টেম্বর',
+  'বিজয় দিবস - ১৬ ডিসেম্বর'
+];
+let schoolPrograms = [
+  'বার্ষিক অনুষ্ঠান - ১৫ নভেম্বর',
+  'সাংস্কৃতিক অনুষ্ঠান - ৫ ডিসেম্বর'
+];
+let teachers = [
+  { name: 'মোঃ আলী', phone: '017xxxxxxx' },
+  { name: 'ফাতিমা', phone: '018xxxxxxx' }
+];
+
+// ইভেন্ট লিসেনার সেটআপ
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('studentView').addEventListener('click', function() {
+    toggleUserView(false);
+  });
+  
+  document.getElementById('teacherView').addEventListener('click', function() {
+    toggleUserView(true);
+  });
+  
+  document.getElementById('addNoticeBtn').addEventListener('click', openNoticeModal);
+  
+  // প্রাথমিক সেটআপ
+  updateDateTime();
+  updateNoticeScroll();
+  setInterval(updateDateTime, 60000);
+  
+  // প্রথমবারের জন্য এডিট আইকন লুকানো রাখা
+  document.querySelectorAll('.edit-icon').forEach(icon => {
+    icon.style.display = 'none';
+  });
+});
+
+// ভিউ টগল ফাংশন
+function toggleUserView(isTeacher) {
+  isTeacherView = isTeacher;
+  const studentBtn = document.getElementById('studentView');
+  const teacherBtn = document.getElementById('teacherView');
+  
+  if (isTeacher) {
+    studentBtn.classList.remove('active');
+    teacherBtn.classList.add('active');
+    document.querySelectorAll('.edit-icon').forEach(icon => {
+      icon.style.display = 'flex';
+    });
+    alert('আপনি এখন শিক্ষক মোডে রয়েছেন। সম্পাদনা করতে পারবেন।');
+  } else {
+    studentBtn.classList.add('active');
+    teacherBtn.classList.remove('active');
+    document.querySelectorAll('.edit-icon').forEach(icon => {
+      icon.style.display = 'none';
+    });
+    alert('আপনি এখন শিক্ষার্থী মোডে রয়েছেন। শুধু দেখতে পারবেন।');
+  }
+}
+
+// তারিখ আপডেট ফাংশন
+function updateDateTime() {
+  const now = new Date();
+  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+  document.getElementById('datetime').textContent = now.toLocaleDateString('bn-BD', options);
+}
+
+// নোটিশ আপডেট ফUNCTION
+function updateNoticeScroll() {
+  document.getElementById('noticeScrollText').textContent = notices.join(' | ');
+}
+
+// মোডাল ফাংশন
+function openModal(title, content) {
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalBody').innerHTML = content;
+  document.getElementById('modal').style.display = 'flex';
+}
+
+function closeModal() {
+  document.getElementById('modal').style.display = 'none';
+}
+
+function openNoticeModal() {
+  if (!isTeacherView) {
+    alert('শিক্ষক মোডে এই অপশনটি доступно');
+    return;
+  }
+  document.getElementById('noticeModal').style.display = 'flex';
+}
+
+function closeNoticeModal() {
+  document.getElementById('noticeModal').style.display = 'none';
+}
+
+function openEditModal(title, content) {
+  document.getElementById('editModalTitle').textContent = title + ' সম্পাদনা';
+  document.getElementById('editModalBody').innerHTML = content;
+  document.getElementById('editModal').style.display = 'flex';
+}
+
+function closeEditModal() {
+  document.getElementById('editModal').style.display = 'none';
+}
+
+// নোটিশ যোগ ফাংশন
+function addNewNotice() {
+  const newNotice = document.getElementById('newNotice').value.trim();
+  if (newNotice) {
+    notices.push(newNotice);
+    updateNoticeScroll();
+    closeNoticeModal();
+    document.getElementById('newNotice').value = '';
+    alert('নতুন নোটিশ যোগ করা হয়েছে!');
+  }
+}
+
+// কার্ড এডিট ফাংশন
+function editCard(cardType) {
+  if (!isTeacherView) {
+    alert('শিক্ষক মোডে এই অপশনটি доступно');
+    return;
+  }
+  
+  switch(cardType) {
+    case 'ক্লাস':
+      editClasses();
+      break;
+    case 'পরীক্ষার সিলেবাস':
+      editSyllabus();
+      break;
+    case 'ফলাফল':
+      alert('ফলাফল সম্পাদনা করার জন্য সংশ্লিষ্ট ক্লাস নির্বাচন করুন');
+      break;
+    case 'স্কাউট প্রোগ্রাম':
+      editScoutPrograms();
+      break;
+    case 'স্কুল বন্ধের তারিখ':
+      editHolidays();
+      break;
+    case 'বিদ্যালয় প্রোগ্রাম':
+      editSchoolPrograms();
+      break;
+    case 'শিক্ষকের নম্বর':
+      editTeachers();
+      break;
+    case 'অভিযোগ':
+      alert('অভিযোগ ফর্মে সরাসরি তথ্য যোগ করা যাবে');
+      break;
+  }
+}
+
+// ক্লাস এডিট ফাংশন
+function editClasses() {
+  let content = `
+    <div class="form-group">
+      <label>নতুন শ্রেণি যোগ করুন</label>
+      <input type="text" id="newClass" placeholder="শ্রেণির নাম">
+    </div>
+    <button class="btn" onclick="addNewClass()">শ্রেণি যোগ করুন</button>
+    
+    <h3>বর্তমান শ্রেণিসমূহ</h3>
+    <ul>
+  `;
+  
+  classes.forEach(cls => {
+    content += `<li class="class-item">${cls} <button onclick="removeClass('${cls}')">❌</button></li>`;
+  });
+  
+  content += '</ul>';
+  
+  openEditModal('ক্লাস', content);
+}
+
+function addNewClass() {
+  const newClass = document.getElementById('newClass').value.trim();
+  if (newClass && !classes.includes(newClass)) {
+    classes.push(newClass);
+    editClasses(); // রিফ্রেশ
+    alert('নতুন শ্রেণি যোগ করা হয়েছে!');
+  }
+}
+
+function removeClass(className) {
+  if (confirm(`আপনি কি ${className} শ্রেণি মুছে ফেলতে চান?`)) {
+    classes = classes.filter(cls => cls !== className);
+    editClasses(); // রিফ্রেশ
+    alert('শ্রেণি মুছে ফেলা হয়েছে!');
+  }
+}
+
+// সিলেবাস এডিট ফাংশন
+function editSyllabus() {
+  let content = `
+    <div class="add-item-form">
+      <h3>নতুন পরীক্ষা যোগ করুন</h3>
+      <div class="form-group">
+        <label>বিষয়</label>
+        <input type="text" id="newSubject" placeholder="বিষয়ের নাম">
+      </div>
+      <div class="form-group">
+        <label>তারিখ</label>
+        <input type="text" id="newDate" placeholder="পরীক্ষার তারিখ">
+      </div>
+      <button class="btn" onclick="addNewSubject()">পরীক্ষা যোগ করুন</button>
+    </div>
+    
+    <h3>বর্তমান পরীক্ষার সিলেবাস</h3>
+    <ul>
+  `;
+  
+  syllabus.forEach((item, index) => {
+    content += `<li class="class-item">${item.subject} - ${item.date} <button onclick="removeSubject(${index})">❌</button></li>`;
+  });
+  
+  content += '</ul>';
+  
+  openEditModal('পরীক্ষার সিলেবাস', content);
+}
+
+function addNewSubject() {
+  const subject = document.getElementById('newSubject').value.trim();
+  const date = document.getElementById('newDate').value.trim();
+  
+  if (subject && date) {
+    syllabus.push({ subject, date });
+    editSyllabus(); // রিফ্রেশ
+    alert('নতুন পরীক্ষা যোগ করা হয়েছে!');
+  }
+}
+
+function removeSubject(index) {
+  if (confirm('আপনি কি এই পরীক্ষা মুছে ফেলতে চান?')) {
+    syllabus.splice(index, 1);
+    editSyllabus(); // রিফ্রেশ
+    alert('পরীক্ষা মুছে ফেলা হয়েছে!');
+  }
+}
+
+// স্কাউট প্রোগ্রাম এডিট ফাংশন
+function editScoutPrograms() {
+  let content = `
+    <div class="form-group">
+      <label>নতুন স্কাউট প্রোগ্রাম যোগ করুন</label>
+      <input type="text" id="newScoutProgram" placeholder="প্রোগ্রামের বিবরণ">
+    </div>
+    <button class="btn" onclick="addNewScoutProgram()">প্রোগ্রাম যোগ করুন</button>
+    
+    <h3>বর্তমান স্কাউট প্রোগ্রাম</h3>
+    <ul>
+  `;
+  
+  scoutPrograms.forEach((program, index) => {
+    content += `<li class="class-item">${program} <button onclick="removeScoutProgram(${index})">❌</button></li>`;
+  });
+  
+  content += '</ul>';
+  
+  openEditModal('স্কাউট প্রোগ্রাম', content);
+}
+
+function addNewScoutProgram() {
+  const program = document.getElementById('newScoutProgram').value.trim();
+  if (program) {
+    scoutPrograms.push(program);
+    editScoutPrograms(); // রিফ্রেশ
+    alert('নতুন স্কাউট প্রোগ্রাম যোগ করা হয়েছে!');
+  }
+}
+
+function removeScoutProgram(index) {
+  if (confirm('আপনি কি এই প্রোগ্রাম মুছে ফেলতে চান?')) {
+    scoutPrograms.splice(index, 1);
+    editScoutPrograms(); // রিফ্রেশ
+    alert('প্রোগ্রাম মুছে ফেলা হয়েছে!');
+  }
+}
+
+// অন্যান্য এডিট ফাংশন (হলিডে, স্কুল প্রোগ্রাম, শিক্ষক)
+function editHolidays() {
+  let content = `
+    <div class="form-group">
+      <label>নতুন ছুটির তারিখ যোগ করুন</label>
+      <input type="text" id="newHoliday" placeholder="ছুটির বিবরণ">
+    </div>
+    <button class="btn" onclick="addNewHoliday()">ছুটি যোগ করুন</button>
+    
+    <h3>বর্তমান ছুটির তালিকা</h3>
+    <ul>
+  `;
+  
+  holidays.forEach((holiday, index) => {
+    content += `<li class="holiday-item">${holiday} <button onclick="removeHoliday(${index})">❌</button></li>`;
+  });
+  
+  content += '</ul>';
+  
+  openEditModal('স্কুল বন্ধের তারিখ', content);
+}
+
+function addNewHoliday() {
+  const holiday = document.getElementById('newHoliday').value.trim();
+  if (holiday) {
+    holidays.push(holiday);
+    editHolidays();
+    alert('নতুন ছুটি যোগ করা হয়েছে!');
+  }
+}
+
+function removeHoliday(index) {
+  if (confirm('আপনি কি এই ছুটি মুছে ফেলতে চান?')) {
+    holidays.splice(index, 1);
+    editHolidays();
+    alert('ছুটি মুছে ফেলা হয়েছে!');
+  }
+}
+
+function editSchoolPrograms() {
+  let content = `
+    <div class="form-group">
+      <label>নতুন বিদ্যালয় প্রোগ্রাম যোগ করুন</label>
+      <input type="text" id="newSchoolProgram" placeholder="প্রোগ্রামের বিবরণ">
+    </div>
+    <button class="btn" onclick="addNewSchoolProgram()">প্রোগ্রাম যোগ করুন</button>
+    
+    <h3>বর্তমান বিদ্যালয় প্রোগ্রাম</h3>
+    <ul>
+  `;
+  
+  schoolPrograms.forEach((program, index) => {
+    content += `<li class="class-item">${program} <button onclick="removeSchoolProgram(${index})">❌</button></li>`;
+  });
+  
+  content += '</ul>';
+  
+  openEditModal('বিদ্যালয় প্রোগ্রাম', content);
+}
+
+function addNewSchoolProgram() {
+  const program = document.getElementById('newSchoolProgram').value.trim();
+  if (program) {
+    schoolPrograms.push(program);
+    editSchoolPrograms();
+    alert('নতুন বিদ্যালয় প্রোগ্রাম যোগ করা হয়েছে!');
+  }
+}
+
+function removeSchoolProgram(index) {
+  if (confirm('আপনি কি এই প্রোগ্রাম মুছে ফেলতে চান?')) {
+    schoolPrograms.splice(index, 1);
+    editSchoolPrograms();
+    alert('প্রোগ্রাম মুছে ফেলা হয়েছে!');
+  }
+}
+
+function editTeachers() {
+  let content = `
+    <div class="add-item-form">
+      <h3>নতুন শিক্ষক যোগ করুন</h3>
+      <div class="form-group">
+        <label>শিক্ষকের নাম</label>
+        <input type="text" id="newTeacherName" placeholder="নাম">
+      </div>
+      <div class="form-group">
+        <label>মোবাইল নম্বর</label>
+        <input type="text" id="newTeacherPhone" placeholder="মোবাইল নম্বর">
+      </div>
+      <button class="btn" onclick="addNewTeacher()">শিক্ষক যোগ করুন</button>
+    </div>
+    
+    <h3>বর্তমান শিক্ষকবৃন্দ</h3>
+    <table class="teacher-table">
+      <tr><th>নাম</th><th>মোবাইল</th><th>কার্যক্রম</th></tr>
+  `;
+  
+  teachers.forEach((teacher, index) => {
+    content += `<tr>
+      <td>${teacher.name}</td>
+      <td>${teacher.phone}</td>
+      <td><button onclick="removeTeacher(${index})">❌</button></td>
+    </tr>`;
+  });
+  
+  content += '</table>';
+  
+  openEditModal('শিক্ষকের নম্বর', content);
+}
+
+function addNewTeacher() {
+  const name = document.getElementById('newTeacherName').value.trim();
+  const phone = document.getElementById('newTeacherPhone').value.trim();
+  
+  if (name && phone) {
+    teachers.push({ name, phone });
+    editTeachers();
+    alert('নতুন শিক্ষক যোগ করা হয়েছে!');
+  }
+}
+
+function removeTeacher(index) {
+  if (confirm('আপনি কি এই শিক্ষক মুছে ফেলতে চান?')) {
+    teachers.splice(index, 1);
+    editTeachers();
+    alert('শিক্ষক মুছে ফেলা হয়েছে!');
+  }
+}
+
+// কার্ড ওপেন ফাংশন
+function openClassMenu() {
+  let content = '<ul class="class-list">';
+  classes.forEach(cls => {
+    content += `<li class="class-item" onclick="openClass('${cls}')">${cls} শ্রেণি <span class="student-count">30 জন</span></li>`;
+  });
+  content += '</ul>';
+  
+  if (isTeacherView) {
+    content += `<button class="btn" onclick="editClasses()">শ্রেণি ব্যবস্থাপনা</button>`;
+  }
+  
+  openModal('ক্লাস', content);
+}
+
+function openClass(cls) {
+  let students = [];
+  for (let i = 1; i <= 30; i++) {
+    students.push({ 
+      name: cls + ' শিক্ষার্থী ' + i, 
+      roll: i, 
+      result: ['A+', 'A', 'B+', 'B', 'C'][Math.floor(Math.random() * 5)] 
+    });
+  }
+  
+  let table = '<table class="student-table"><thead><tr><th>নাম</th><th>রোল</th><th>ফলাফল</th></tr></thead><tbody>';
+  students.forEach(s => {
+    table += `<tr><td>${s.name}</td><td>${s.roll}</td><td>${s.result}</td></tr>`;
+  });
+  table += '</tbody></table>';
+  
+  if (isTeacherView) {
+    table += `<button class="btn" onclick="alert('নতুন শিক্ষার্থী যোগ করার ফিচার')">নতুন শিক্ষার্থী যোগ করুন</button>`;
+  }
+  
+  openModal(cls + ' শ্রেণি', table);
+}
+
+function openSyllabus() {
+  let content = '<ul class="program-list">';
+  syllabus.forEach(item => {
+    content += `<li>${item.subject} - ${item.date}</li>`;
+  });
+  content += '</ul>';
+  
+  if (isTeacherView) {
+    content += `<button class="btn" onclick="editSyllabus()">সিলেবাস সম্পাদনা</button>`;
+  }
+  
+  openModal('পরীক্ষার সিলেবাস', content);
+}
+
+function openResults() {
+  openClassMenu();
+}
+
+function openScoutProgram() {
+  let content = '<ul class="program-list">';
+  scoutPrograms.forEach(program => {
+    content += `<li>${program}</li>`;
+  });
+  content += '</ul>';
+  
+  if (isTeacherView) {
+    content += `<button class="btn" onclick="editScoutPrograms()">প্রোগ্রাম সম্পাদনা</button>`;
+  }
+  
+  openModal('কাব স্কাউট প্রোগ্রাম', content);
+}
+
+function openHolidays() {
+  let content = '<ul class="program-list">';
+  holidays.forEach(holiday => {
+    content += `<li class="holiday-item">${holiday}</li>`;
+  });
+  content += '</ul>';
+  
+  if (isTeacherView) {
+    content += `<button class="btn" onclick="editHolidays()">ছুটির তালিকা সম্পাদনা</button>`;
+  }
+  
+  openModal('স্কুল বন্ধের তারিখ', content);
+}
+
+function openSchoolProgram() {
+  let content = '<ul class="program-list'>";
+  schoolPrograms.forEach(program => {
+    content += `<li>${program}</li>`;
+  });
+  content += '</ul>';
+  
+  if (isTeacherView) {
+    content += `<button class="btn" onclick="editSchoolPrograms()">প্রোগ্রাম সম্পাদনা</button>`;
+  }
+  
+  openModal('বিদ্যালয় প্রোগ্রাম', content);
+}
+
+function openTeachers() {
+  let content = '<table class="teacher-table"><thead><tr><th>নাম</th><th>মোবাইল</th></tr></thead><tbody>';
+  teachers.forEach(teacher => {
+    content += `<tr><td>${teacher.name}</td><td>${teacher.phone}</td></tr>`;
+  });
+  content += '</tbody></table>';
+  
+  if (isTeacherView) {
+    content += `<button class="btn" onclick="editTeachers()">শিক্ষক তালিকা সম্পাদনা</button>`;
+  }
+  
+  openModal('শিক্ষকের নম্বর', content);
+}
+
+function openComplaint() {
+  let content = '<form class="complaint-form"><input type="text" placeholder="নাম"><input type="text" placeholder="মোবাইল নম্বর"><textarea placeholder="অভিযোগ লিখুন"></textarea><button type="button" class="btn" onclick="alert(\'অভিযোগ জমা হয়েছে\')">জমা দিন</button></form>';
+  openModal('অভিযোগ প্রদান', content);
+}
+
+// মোডাল বাইরে ক্লিক করলে বন্ধ হবে
+window.onclick = function(event) {
+  const modal = document.getElementById('modal');
+  const noticeModal = document.getElementById('noticeModal');
+  const editModal = document.getElementById('editModal');
+  
+  if (event.target == modal) closeModal();
+  if (event.target == noticeModal) closeNoticeModal();
+  if (event.target == editModal) closeEditModal();
+}
+</script>
+</body>
+</html>
